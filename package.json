@@ -1,0 +1,13 @@
+{
+  "name": "bas",
+  "version": "1.0.0",
+  "description": "test to automate BAS using javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Godwin Edet",
+  "license": "ISC",
+  "type": "commonjs"
+}
