@@ -1,10 +1,12 @@
-name: Cypress Bas Regression Tests
-on: [push, pull_request]
-  
-  
+name: Cypress Regression Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
