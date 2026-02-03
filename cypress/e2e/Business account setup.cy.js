@@ -1,7 +1,7 @@
 describe('BAS Registration Flow', () => {
   it('should complete the business setup form', () => {
     // 1. Navigate from Login to Sign Up
-    cy.visit('https://qa.bas.ng');
+    cy.visit('/');
 
     cy.contains('Start Here', { matchCase: false }).click();
 
@@ -32,20 +32,20 @@ describe('BAS Registration Flow', () => {
      // 2. Target the upload input
     // Most 'Choose file' triggers are linked to a hidden input[type="file"]
   cy.get('input[type="file"]').selectFile('cypress/fixtures/logo.png', { force: true });
+
+  cy.screenshot();
   
+  // 3. Alternatively, if you want to simulate a drag-and-drop onto the zone
+        //cy.get('div').contains('Drag and Drop file here')
+       //.selectFile('cypress/fixtures/logo.png', { action: 'drag-drop' });
 
-// 3. Alternatively, if you want to simulate a drag-and-drop onto the zone
-//cy.get('div').contains('Drag and Drop file here')
-  //.selectFile('cypress/fixtures/logo.png', { action: 'drag-drop' });
-
-// 4. Final step: Click Save & Continue
-cy.contains('button', 'Save & Continue')
-  .click({ force: true });
+    // 4. Final step: Click Save & Continue
+  cy.contains('button', 'Save & Continue').click({ force: true });
    
 
     // 7. Submit the Form
-    cy.contains('button', 'Save & Continue')
-      .should('be.visible')
-      .click({ force: true });
+    cy.contains('button', 'Save & Continue').should('be.visible').click({ force: true });
+
+
   });
 });
