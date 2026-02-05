@@ -17,7 +17,7 @@ export const generateUser = () => {
     phoneNumber: faker.phone.number(),
     // company: faker.company.name(),
     // This removes everything EXCEPT letters, numbers, and spaces
-company: faker.company.name().replace(/[^a-z0-9 ]/gi, ''),
+     company: faker.company.name().replace(/[^a-z0-9 ]/gi, ''),
      jobTitle: faker.person.jobTitle(), 
      
 
