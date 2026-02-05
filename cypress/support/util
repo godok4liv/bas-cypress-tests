@@ -1,0 +1,27 @@
+
+
+Cypress.Commands.add('generateEmail', () => {
+  const userEmail = `Godok_${Date.now()}@yopmail.com`;   
+    return userEmail;   
+});
+
+ 
+Cypress.Commands.add('generateDynamicName', (prefix = 'Test') => {
+  const businessName = `${prefix}-${Cypress._.random(100, 999)}`;
+  // Log the generated name to the Cypress command log for visibility
+  Cypress.log({
+    name: 'generateDynamicName',
+    message: businessName,
+  });
+  return businessName;
+});
+
+
+//for json file(to be used in the future)
+//  cy.fixture('branchData').then((data) => {
+ // cy.get('input[type="email"]').type(data.email);
+ // cy.get('input[placeholder="Enter branch name"]').type(data.branches[0].name);
+//}); 
+
+
+
