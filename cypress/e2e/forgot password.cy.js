@@ -3,18 +3,18 @@
 
 describe('template spec', () => {
   it('passes', () => {
-    cy.visit('/');
+    cy.visit('seafinishglobal/');
     // Add your test steps here navigating to the forgot password page and verifying its functionality
     cy.contains('Forgot Password?', { matchCase: false }).click();
 
       // Assert we are on the forgot password page
-    cy.url().should('include', '/forgot-password');
+    cy.url().should('include', 'seafinishglobal/forgot-password');
 
    // navigate back to login page
     cy.contains('Back to Login', { matchCase: false }).click();
 
      // Assert we are back on the login page
-    cy.url().should('eq', 'https://qaapp.bas.ng/'); // Adjust the URL as needed
+    cy.url().should('eq', 'https://qaapp.bas.ng/seafinishglobal'); // Adjust the URL as needed
 
    // Click the "Forgot Password?" link
     cy.contains('Forgot Password?', { matchCase: false }).click();
@@ -42,11 +42,6 @@ describe('template spec', () => {
     // Phase 3: Transition Check
       cy.url().should('include', '/password-reset');
       cy.contains('Enter the 6-digit code').should('be.visible');
-
-
-
-
-
 
     // --- Phase 2: Verification Code (image_2ee499.png) ---
     // Verify we are on the verification screen

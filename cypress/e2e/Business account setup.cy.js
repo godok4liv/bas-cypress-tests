@@ -36,9 +36,6 @@ const userEmail = `godwin.test${Cypress._.random(1, 1000)}@example.com`;
       // 4. Fill in Business Details
       cy.get('input[placeholder*="business name"]').type(newUser.company);
 
-
-
-
       // 5. Handle the Business Type Dropdown (Radix/Select component)
       cy.contains('Select business type').click();
       // Select an option from the resulting portal menu
@@ -56,7 +53,7 @@ const userEmail = `godwin.test${Cypress._.random(1, 1000)}@example.com`;
       // Most 'Choose file' triggers are linked to a hidden input[type="file"]
     cy.get('input[type="file"]').selectFile('cypress/fixtures/logo.png', { force: true });
 
-    cy.screenshot();
+    //cy.screenshot();
     
     // 3. Alternatively, if you want to simulate a drag-and-drop onto the zone
           //cy.get('div').contains('Drag and Drop file here')
@@ -98,7 +95,7 @@ const userEmail = `godwin.test${Cypress._.random(1, 1000)}@example.com`;
       // 3. Success Validation
       //cy.contains('Branch created successfully').should('be.visible');
 
-
+      cy.wait(4000); // Wait for 2 seconds before proceeding to the next step 
 
       // 3. Add First Team Member (image_dc33e5.png)
       //cy.url().should('include', '/add-team');

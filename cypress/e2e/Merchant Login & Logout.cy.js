@@ -1,6 +1,6 @@
 describe('owner login and logout workflow', () => {
   it('should log in with the Owner with valid existing business account & logout user successfully', () => {
-    cy.visit('/');
+    cy.visit('seafinishglobal/');
     // Add your login test steps here
 
     // Targeting elements directly
@@ -36,7 +36,7 @@ describe('owner login and logout workflow', () => {
 
     //cy.wait(3000); // Wait for 2 seconds to allow for logout processing
 
-    cy.url().should('eq', 'https://qaapp.bas.ng/'); // Verify we are back on the login page
+    cy.url().should('eq', 'https://qaapp.bas.ng/seafinishglobal'); // Verify we are back on the login page
 
        
     //cy.contains('button','Log In' ).should('be.disabled'); 
