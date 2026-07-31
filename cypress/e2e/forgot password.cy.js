@@ -3,18 +3,18 @@
 
 describe('template spec', () => {
   it('passes', () => {
-    cy.visit('seafinishglobal/');
+    cy.visit('regresssmartltd/');
     // Add your test steps here navigating to the forgot password page and verifying its functionality
     cy.contains('Forgot Password?', { matchCase: false }).click();
 
       // Assert we are on the forgot password page
-    cy.url().should('include', 'seafinishglobal/forgot-password');
+    cy.url().should('include', 'regresssmartltd/forgot-password');
 
    // navigate back to login page
     cy.contains('Back to Login', { matchCase: false }).click();
 
      // Assert we are back on the login page
-    cy.url().should('eq', 'https://qaapp.bas.ng/seafinishglobal'); // Adjust the URL as needed
+    cy.url().should('eq', 'https://qaapp.bas.ng/regresssmartltd/login'); // Adjust the URL as needed
 
    // Click the "Forgot Password?" link
     cy.contains('Forgot Password?', { matchCase: false }).click();

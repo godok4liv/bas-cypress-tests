@@ -16,20 +16,25 @@ const userEmail = `godwin.test${Cypress._.random(1, 1000)}@example.com`;
       const lastName = faker.person.lastName();
 
       // 1. Navigate from Login to Sign Up
-      cy.visit('/');
+      cy.visit('https://qa.bas.ng/');
 
-      cy.contains('Start Here', { matchCase: false }).click();
+      cy.contains('Sign Up', { matchCase: false }).click();
+      cy.wait(4000); // Wait for 4seconds to allow for the transition
+
+      cy.url().should('include', '/signup'); // Assert we are on the signup page
 
       // 2. Assert we are on the Setup page
-      cy.contains('h1', "Let's Setup Your Account").should('be.visible');
+          //cy.contains('h2', "Let's Setup Your Account").should('be.visible');
 
       // 3. Fill in User Details first name, last name, email address
       
-      cy.get('input[placeholder*="first name"]').type(firstName);
+      //cy.get('input[placeholder*="Enter first name"]').type(firstName);
+      cy.get ("input[@id='_r_b_-form-item']").type(firstName);
 
           //generate a random last name using faker
       
-      cy.get('input[placeholder*="last name"]').type(lastName);
+      cy.get('input[placeholder*="Enter last name"]').type(lastName);
+      
       
       cy.get('input[placeholder*="email address"]').type(newUser.email);
 
