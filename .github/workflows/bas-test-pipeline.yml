@@ -1,4 +1,5 @@
 name: Cypress BAS End 2 End Regression Tests
+
 on:
   push:
     branches: [ main ]
@@ -8,11 +9,33 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Runs your organized folders concurrently across parallel runners
+        test-group: [ 'auth', 'pos', 'inventory-management' ]
+
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Cypress run
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Run Cypress Feature Suite
         uses: cypress-io/github-action@v6
         with:
-          start: npm start
+          browser: chrome
+          # Targets your exact kebab-case folders dynamically
+          spec: cypress/e2e/${{ matrix.test-group }}/**/*.cy.js
+
+      - name: Upload Screenshots on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-${{ matrix.test-group }}
+          path: cypress/screenshots/
+          retention-days: 7
