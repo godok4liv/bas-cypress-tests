@@ -1,5 +1,7 @@
+
+
 describe('Login Page Automation', () => {
-  const baseUrl = 'https://qaapp.bas.ng/regresssmartltd/login';
+  const baseUrl = 'https://qaapp.bas.ng/godokpharmglobalenterprise/login';
 
   beforeEach(() => {
     cy.visit(baseUrl);

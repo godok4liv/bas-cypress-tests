@@ -1,7 +1,7 @@
 
 
 import {faker} from '@faker-js/faker';
-import { generateUser } from '../support/faker';
+import { generateUser } from '../../support/faker';
 const userEmail = `godwin.test${Cypress._.random(1, 1000)}@example.com`;
 
 

@@ -1,4 +1,4 @@
-name: Cypress Regression Tests
+name: Cypress BAS End 2 End Regression Tests
 on:
   push:
     branches: [ main ]
@@ -15,5 +15,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          
           start: npm start
+        
