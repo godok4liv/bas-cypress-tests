@@ -16,7 +16,3 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: npm start
-<<<<<<< HEAD
-        
-=======
->>>>>>> 51d60090a0a3b1e8e210aa7dc4bbeff53f33c25a
