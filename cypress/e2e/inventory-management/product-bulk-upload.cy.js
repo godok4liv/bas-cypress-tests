@@ -107,7 +107,7 @@ describe('Product Bulk Upload Automation', () => {
 
     // 2. Select your template file from the 'cypress/fixtures/' folder
     // Ensure 'products.xlsx' exists inside your project's cypress/fixtures/ directory
-    const filePath = 'BAS/cypress/fixtures/BAS_Stock_Template.xlsx'; // Adjust the path if necessary
+    const filePath = 'cypress/fixtures/bulk_product_template_001.xlsx'; // Adjust the path if necessary
 
     // 3. Target the hidden file input hidden beneath the "Choose file" area
     cy.get('input[type="file"]')
@@ -121,12 +121,73 @@ describe('Product Bulk Upload Automation', () => {
       .click();
 
 
+          // 1. Verify the parsing message is visible to confirm data was read properly
+    cy.contains('div, p, span', /20 new products found/i)
+      .should('be.visible');
+
+    // 2. Click the teal final action button to save the products
+    cy.contains('button, div, span', /^Confirm\s*&\s*Allocate\s*Stock$/i)
+      .should('be.visible')
+      .click();
+
+
+
+
+
+    // --- STEP 6: CONDITIONAL VALIDATION HANDLING ---
+
+    // 1. Give the modal a brief moment to finish checking the uploaded data
+    cy.wait(1500);
+
+    // 2. Check the modal body to see if any validation error text exists
+    cy.get('body').then(($body) => {
+      
+      // Look for the "Expiry Date cannot be in the future" or general validation error signatures
+      const hasErrors = $body.text().includes('Expiry Date cannot be in the future') || 
+                        $body.find('.text-red-500, [class*="error"]').length > 0;
+
+      if (hasErrors) {
+        // CASE A: Errors found / Upload blocked
+        cy.log('⚠️ Validation errors detected. Attempting to re-upload...');
+        
+        // Assert an error message is visible on the screen
+        cy.contains('div, p, span', /Expiry Date/i).should('be.visible');
+
+        // Click the 'Re-upload File' button to retry a clean template
+        cy.contains('button, span, div', /^Re-upload\s*File$/i)
+          .should('be.visible')
+          .click();
+
+        // Optional: Re-attach a corrected spreadsheet fixture file if available
+        // const cleanFilePath = 'cypress/fixtures/product_fixed.xlsx';
+        // cy.get('input[type="file"]').first().selectFile(cleanFilePath, { force: true });
+
+      } else {
+        // CASE B: Data is perfectly clean
+        cy.log('✅ No errors found. Saving inventory changes...');
+
+        // Click the dark teal final action button to finalize stock allocation
+        cy.contains('button, span, div', /^Confirm\s*&\s*Allocate\s*Stock$/i)
+          .should('be.visible')
+          .click();
+
+
+
+        // Verify the modal successfully dismisses
+        cy.contains('Bulk Upload').should('not.exist');
+      }
+    });
 
 
 
 
 
 
+
+
+
+    // 3. Optional Final Assertion: Verify the modal closes or a success message pops up
+    cy.contains('Bulk Upload').should('not.exist');
 
 
 
