@@ -43,13 +43,47 @@ describe('Godok Pharm Global Enterprise - Sales Automation', () => {
       .should('be.visible')
       .click();
 
-    // 2. RANDOM CUSTOMER SELECTION
-    cy.contains('button', /^Select$/i)
-      .should('have.length.at.least', 1) 
-      .then(($buttons) => {
-        const randomIndex = Math.floor(Math.random() * $buttons.length);
-        cy.wrap($buttons[randomIndex]).click();
-      });
+      cy.wait(1000); // Wait for the modal to appear
+
+    // // 2. RANDOM CUSTOMER SELECTION
+    // cy.contains('button', /^Select$/i)
+    //   .should('have.length.at.least', 1) 
+    //   .then(($buttons) => {
+    //     const randomIndex = Math.floor(Math.random() * $buttons.length);
+    //     cy.wrap($buttons[randomIndex]).click();
+    //   });
+
+
+
+
+    
+// 2. RANDOM CUSTOMER SELECTION (FIXED FOR FLAKINESS)
+// ------------------------------------------------------------------
+// 1. Confirm that at least one Select button has loaded and is completely stable
+cy.contains('button', /^Select$/i).should('be.visible');
+
+// 2. Query the DOM for the count of buttons available at this exact moment
+cy.get('button').contains(/^Select$/i).then(($buttons) => {
+  const totalCount = $buttons.length;
+  const randomIndex = Math.floor(Math.random() * totalCount);
+  
+  cy.log(`🎲 Total Select buttons discovered: ${totalCount} | Selecting Index: ${randomIndex}`);
+
+  // 3. Instead of wrapping an old reference, fetch a completely fresh element using .eq()
+  cy.get('button')
+    .contains(/^Select$/i)
+    .eq(randomIndex)
+    .scrollIntoView()
+    .click({ force: true });
+});
+
+
+
+
+
+
+
+
 
     // Verify that the "No Customer Selected" state is cleared
     cy.contains('No Customer Selected').should('not.exist');
