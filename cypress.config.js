@@ -1,29 +1,32 @@
+
+
 const { defineConfig } = require('cypress');
 
-module.exports = defineConfig({
-  e2e: {
-    baseUrl: "https://bas.ng",
-    defaultCommandTimeout: 10000,
-    pageLoadTimeout: 30000,
-    
-    // Explicitly defines your custom spec layout matching the project explorer
-    specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
 
-    reporter: 'cypress-mochawesome-reporter',
-    reporterOptions: {
-      reportDir: 'cypress/reports',
-      overwrite: true,
-      html: true,
-      json: true,
-      timestamp: 'mmddyyyy_HHMMss',
-      showSkipped: true,
-      charts: true
-    },
+
+
+module.exports = defineConfig({
+
+
+  e2e: {
+    baseUrl: "https://qaapp.bas.ng",
+
+
+      reporter: 'cypress-mochawesome-reporter',
+
+
+
+
+      // Increase global timeout from 4,000ms to 10,000ms (10 seconds)
+         defaultCommandTimeout: 10000,
+        // You can also increase page load timeouts for slow redirects
+         pageLoadTimeout: 30000,
+
 
     setupNodeEvents(on, config) {
-      // Binds the Mochawesome plugin listener to compile automated artifacts on run completion
+      // The reporter plugin must be inside the e2e block
       require('cypress-mochawesome-reporter/plugin')(on);
-      return config;
     },
   },
 });
+
