@@ -2,7 +2,7 @@
 
 describe('owner login and logout workflow', () => {
   it('should log in with the Owner with valid existing business account & logout successfully', () => {
-    cy.visit('regresssmartltd/');
+    cy.visit('/regresssmartltd/login'); // Visit the login page
 
     // Add your login test steps here
             cy.reload(true);
