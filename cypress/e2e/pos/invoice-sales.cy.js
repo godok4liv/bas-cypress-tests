@@ -1,14 +1,14 @@
 
 
 
-describe('Godok Pharm Global Enterprise - Sales Automation', () => {
+describe('GodokPharm- invoice Sales Automation workflow', () => {
   // Define credentials and PIN authentication states for the test lifecycle
   const userEmail = 'otester777@gmail.com';
   const userPassword = 'Eazerd123@';
   const invalidPin = '11111';
   const validPin = '12345';
 
-  it('Should process sales for Existing Customers and navigate to Sales Log to confirm sales receipt match', () => {
+  it(' invoice generation attempt with invalid pin and valid pin Automation workflow', () => {
 
     /**
      * Helper Function: fillPinInputs

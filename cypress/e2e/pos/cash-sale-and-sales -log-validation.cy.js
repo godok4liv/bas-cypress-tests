@@ -1,12 +1,12 @@
 
 
-describe('Godok Pharm Global Enterprise - Cash Sales Automation', () => {
+describe('GodokPharm- Cash Sales Automation workflow', () => {
   const userEmail = 'otester777@gmail.com';
   const userPassword = 'Eazerd123@';
   const invalidPin = '11111';
   const validPin = '12345';
 
-  it('Should process Cash-sales for Walk-In Customers and navigate to Sales Log to confirm sales receipt match', () => {
+  it('Should process Cash-sales and navigate to Sales Log to confirm sales receipt match', () => {
 
     // ----------------------------------------------------
     // HELPER: FILL 5-DIGIT PIN INPUTS (LIVE DOM QUERY)

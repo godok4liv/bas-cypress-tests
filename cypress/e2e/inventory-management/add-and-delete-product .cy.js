@@ -6,7 +6,7 @@ describe('Stock Book - Add & Delete Product End-to-End Lifecycle', () => {
   const userPassword = Cypress.env('USER_PASSWORD') || 'Eazerd123@';
   const authPin = Cypress.env('SECURITY_PIN') || '12345';
 
-  it('should complete the full product lifecycle: create, allocate, verify, delete, and paginate', () => {
+  it('should complete the full product lifecycle', () => {
     // ----------------------------------------------------
     // 1. AUTHENTICATION & NAVIGATION
     // ----------------------------------------------------

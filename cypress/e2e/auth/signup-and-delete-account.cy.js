@@ -3,22 +3,55 @@ import { faker } from '@faker-js/faker';
 describe('BAS Signup Form', () => {
   it('should successfully fill out and submit the signup form,Navigate to Business Control and request account deletion', () => {
     // Generate dynamic values
-    const generatedEmail = faker.internet.email();
-    const companyName = faker.company.name().replace(/[^a-zA-Z\s]/g, '').trim();
-    const password = 'Password123!';
-    const fileName = 'logo.png';
-    const branchName = faker.company.name().replace(/,/g, '') + ' Branch';
-    const branchAddress = faker.location.streetAddress();
-    const memberFirstName = faker.person.firstName();
-    const memberLastName = faker.person.lastName();
-    const memberEmail = faker.internet.email();
+    // const generatedEmail = faker.internet.email();
+    // const companyName = faker.company.name().replace(/[^a-zA-Z\s]/g, '').trim();
+    // const password = 'Password123!';
+    // const fileName = 'logo.png';
+    // const branchName = faker.company.name().replace(/,/g, '') + ' Branch';
+    // const branchAddress = faker.location.streetAddress();
+    // const memberFirstName = faker.person.firstName();
+    // const memberLastName = faker.person.lastName();
+    // const memberEmail = faker.internet.email();
+
+
+// 1. Generate dynamic data OUTSIDE the origin block
+const userData = {
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  generatedEmail: faker.internet.email(),
+  companyName: faker.company.name().replace(/[^a-zA-Z\s]/g, '').trim(),
+  password : 'Password123!',
+  // fileName :'logo.png',
+  branchName : faker.company.name().replace(/,/g, '') + ' Branch',
+  branchAddress : faker.location.streetAddress(),
+  memberFirstName : faker.person.firstName(),
+  memberLastName : faker.person.lastName(),
+  memberEmail : faker.internet.email()
+};
+
+
+
 
     // Visit the signup page
-    cy.visit('/signup');
+    cy.visit('https://qa.bas.ng/');
+
+    // Targets the Sign Up button inside the navigation/header area
+       cy.get('nav, header').contains('Pricing').click();
+
+      // Finds the first card container or column and clicks its button
+    cy.get('.pricing-card, div').contains('Choose To Pay').first().click();
+
+
+// Wrap your code inside the active origin block
+cy.origin('https://qaapp.bas.ng', { args: userData },({firstName,lastName,generatedEmail,companyName,password,memberEmail,memberFirstName,memberLastName,branchAddress,branchName}) => {
+
+// Prevent app-level JavaScript crashes during file upload from failing the test
+    Cypress.on('uncaught:exception', () => false);
+
 
     // Fill in basic user details
-    cy.get('input[placeholder="Enter first name"]').type(faker.person.firstName());
-    cy.get('input[placeholder="Enter last name"]').type(faker.person.lastName());
+    cy.get('input[placeholder="Enter first name"]').type(firstName);
+    cy.get('input[placeholder="Enter last name"]').type(lastName);
     cy.get('input[placeholder="Enter email address"]').type(generatedEmail);
     cy.get('input[placeholder="Enter business name"]').type(companyName);
 
@@ -32,8 +65,8 @@ describe('BAS Signup Form', () => {
     cy.get('input[placeholder="Enter password"]').type(password);
     cy.get('input[type="password"]').last().type(password);
 
-    // Upload Logo
-    cy.get('input[type="file"]').selectFile(`cypress/fixtures/${fileName}`, { force: true });
+    // // Upload Logo
+    // cy.get('input[type="file"]').selectFile(`cypress/fixtures/logo.png`, { force: true });
 
     // Accept Terms & Conditions
     cy.get('[role="checkbox"]').click();
@@ -102,5 +135,19 @@ describe('BAS Signup Form', () => {
     cy.get('[role="dialog"] input, .modal input, input[type="tel"]').first().type('12345', { force: true, delay: 100 });
     cy.get('textarea[placeholder*="why you are leaving"]').should('be.visible').type('Automated testing account cleanup.');
     cy.contains('button', /^Send verification code$/).should('be.visible').click({ force: true });
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
   });
 });

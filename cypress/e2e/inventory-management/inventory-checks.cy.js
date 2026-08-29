@@ -12,7 +12,7 @@ describe('Inventory Checks - Branch Selection & Check Generation', () => {
     cy.url().should('include', '/dashboard');
   });
 
-  it('TC_001: Should navigate to inventory checks, select an active branch, and authorize stock sheet generation', () => {
+  it('TC_001: Should navigate to inventory checks and authorize stock sheet generation', () => {
     // STEP 2: NAVIGATION TO INVENTORY CHECKS
     // ----------------------------------------------------
     cy.contains('a, span', 'Inventory Checks').click();

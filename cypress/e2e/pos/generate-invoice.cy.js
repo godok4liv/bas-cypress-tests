@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
 
-describe('Godok Pharm Global Enterprise - Sales Automation', () => {
+describe('GodokPharm - ', () => {
   const userEmail = 'otester777@gmail.com';
   const userPassword = 'Eazerd123@';
   const validPin = '12345';
 
-  it('Should process sales for Existing Customers and navigate to Sales Log to confirm sales receipt match', () => {
+  it('Should process invoice sales for Existing Customers and navigate to Sales Log to confirm sales receipt match  ', () => {
 
     // ----------------------------------------------------
     // HELPER: FILL 5-DIGIT PIN INPUTS (LIVE DOM QUERY)
@@ -45,18 +45,8 @@ describe('Godok Pharm Global Enterprise - Sales Automation', () => {
 
       cy.wait(1000); // Wait for the modal to appear
 
-    // // 2. RANDOM CUSTOMER SELECTION
-    // cy.contains('button', /^Select$/i)
-    //   .should('have.length.at.least', 1) 
-    //   .then(($buttons) => {
-    //     const randomIndex = Math.floor(Math.random() * $buttons.length);
-    //     cy.wrap($buttons[randomIndex]).click();
-    //   });
 
 
-
-
-    
 // 2. RANDOM CUSTOMER SELECTION (FIXED FOR FLAKINESS)
 // ------------------------------------------------------------------
 // 1. Confirm that at least one Select button has loaded and is completely stable
@@ -76,11 +66,6 @@ cy.get('button').contains(/^Select$/i).then(($buttons) => {
     .scrollIntoView()
     .click({ force: true });
 });
-
-
-
-
-
 
 
 

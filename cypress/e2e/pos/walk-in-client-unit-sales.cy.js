@@ -1,3 +1,5 @@
+
+
 describe('Godok Pharm Global Enterprise - Sales Automation', () => {
   // Define credentials and configuration states for the automation lifecycle
   const userEmail = 'otester777@gmail.com'; 
@@ -167,25 +169,60 @@ describe('Godok Pharm Global Enterprise - Sales Automation', () => {
     cy.get('[role="dialog"], .modal').last().within(() => {
       cy.contains(/5-digit PIN/i).should('be.visible'); 
 
-      // CRITERIA A: Invalidate transaction workflow using inaccurate credentials
-      cy.get('input').each(($input, index) => {
-        if (index < invalidPin.length) {
-          cy.wrap($input).clear().type(invalidPin[index]);
-        }
-      });
+      // // CRITERIA A: Invalidate transaction workflow using inaccurate credentials
+      // cy.get('input').each(($input, index) => {
+      //   if (index < invalidPin.length) {
+      //     cy.wrap($input).clear().type(invalidPin[index]);
+      //   }
 
-      cy.contains('button', /^Confirm$/i).click({ force: true });
+      // });
+
+
+// CRITERIA A: Invalidate transaction workflow (GLOBAL COMPONENT FIX)
+// ------------------------------------------------------------------
+const invalidPin = '11111'; // Define the invalid PIN as a string 
+
+// 1. Locate the single active underlying master input field for the PIN
+cy.get('input[type="text"], input[type="tel"], input[maxlength="1"], input')
+  .filter(':visible')
+  .first() // Safely grabs the single text entry node processing the PIN characters
+  .should('be.visible')
+  .clear({ force: true })
+  .type(invalidPin, { delay: 100 }); // Types the entire string at once
+
+// 2. Target and click strictly the actual teal Confirm button
+cy.contains('button', /^Confirm$/)
+  .should('be.visible')
+  .click({ force: true });
+
+
+
+      // cy.contains('button', /^Confirm$/i).click({ force: true });
 
       // Verify rejection display notice configurations
       cy.contains(/Authorization failed.*invalid or expired PIN/i)
         .should('be.visible');
 
-      // CRITERIA B: Input authentic verification codes to clear processing checkpoints
-      cy.get('input').each(($input, index) => {
-        if (index < validPin.length) {
-          cy.wrap($input).clear().type(validPin[index]);
-        }
-      });
+
+
+
+
+// 1. Locate the single active underlying master input field for the PIN
+cy.get('input[type="text"], input[type="tel"], input[maxlength="1"], input')
+  .filter(':visible')
+  .first() // Safely grabs the single text entry node processing the PIN characters
+  .should('be.visible')
+  .clear({ force: true })
+  .type(validPin, { delay: 100 }); // Types the entire string at once
+
+// 2. Target and click strictly the actual teal Confirm button
+cy.contains('button', /^Confirm$/)
+  .should('be.visible')
+  .click({ force: true });
+
+
+
+
     });
   });
 });

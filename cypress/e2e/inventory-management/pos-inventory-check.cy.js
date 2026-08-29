@@ -3,7 +3,7 @@ describe('Sales Representative - POS Daily Inventory Verification Workflow', () 
   const repPassword = 'Eazerd123@';
   const securityPin = '80888'; // Populated with your working verification PIN
 
-  it('TC_001: Should login as sales rep, navigate to inventory checks, and dynamically handle the landing view', () => {
+  it('TC_001: Should login as sales rep and dynamically handle the landing view', () => {
     
     // STEP 1: SALES REPRESENTATIVE AUTHENTICATION
     // ----------------------------------------------------
