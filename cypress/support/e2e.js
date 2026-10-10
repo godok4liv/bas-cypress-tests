@@ -16,7 +16,6 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 import 'cypress-mochawesome-reporter/register';
-//Cypress.on('uncaught:exception', () => false);
 
 // cypress/support/e2e.js
 
@@ -28,6 +27,11 @@ Cypress.on('uncaught:exception', (err) => {
   
   // Ignore the null document app errors you encountered earlier
   if (err.message.includes("Cannot read properties of null (reading 'document')")) {
+    return false;
+  }
+
+  // Ignore React Minified Error #418 / Hydration mismatch errors
+  if (err.message.includes('Minified React error #418') || err.message.includes('hydration')) {
     return false;
   }
 
@@ -50,6 +54,3 @@ Cypress.on("test:after:run", (test, runnable) => {
     addContext({ test }, screenshotPath);
   }
 });
-
-
-

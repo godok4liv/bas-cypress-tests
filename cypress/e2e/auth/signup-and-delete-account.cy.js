@@ -2,17 +2,7 @@ import { faker } from '@faker-js/faker';
 
 describe('BAS Signup Form', () => {
   it('should successfully fill out and submit the signup form,Navigate to Business Control and request account deletion', () => {
-    // Generate dynamic values
-    // const generatedEmail = faker.internet.email();
-    // const companyName = faker.company.name().replace(/[^a-zA-Z\s]/g, '').trim();
-    // const password = 'Password123!';
-    // const fileName = 'logo.png';
-    // const branchName = faker.company.name().replace(/,/g, '') + ' Branch';
-    // const branchAddress = faker.location.streetAddress();
-    // const memberFirstName = faker.person.firstName();
-    // const memberLastName = faker.person.lastName();
-    // const memberEmail = faker.internet.email();
-
+  
 
 // 1. Generate dynamic data OUTSIDE the origin block
 const userData = {
@@ -26,7 +16,8 @@ const userData = {
   branchAddress : faker.location.streetAddress(),
   memberFirstName : faker.person.firstName(),
   memberLastName : faker.person.lastName(),
-  memberEmail : faker.internet.email()
+  memberEmail : faker.internet.email(),
+  roleName: faker.person.jobTitle().replace(/[^a-zA-Z\s]/g, '').trim()
 };
 
 
@@ -43,7 +34,7 @@ const userData = {
 
 
 // Wrap your code inside the active origin block
-cy.origin('https://qaapp.bas.ng', { args: userData },({firstName,lastName,generatedEmail,companyName,password,memberEmail,memberFirstName,memberLastName,branchAddress,branchName}) => {
+cy.origin('https://qaapp.bas.ng', { args: userData },({firstName,lastName,generatedEmail,companyName,password,memberEmail,memberFirstName,memberLastName,branchAddress,branchName,roleName}) => {
 
 // Prevent app-level JavaScript crashes during file upload from failing the test
     Cypress.on('uncaught:exception', () => false);
@@ -91,13 +82,32 @@ cy.origin('https://qaapp.bas.ng', { args: userData },({firstName,lastName,genera
     cy.get('input[placeholder="Enter last name"]').type(memberLastName);
     cy.get('input[placeholder="Enter email address"]').type(memberEmail);
 
-    // Handle Custom Role Dropdown selection
-    cy.get('button:has(span[data-slot="select-value"])').click({ force: true });
-    cy.focused().type('Admin{enter}');
-    cy.contains('[role="option"], div, span', 'Admin').should('exist').click({ force: true });
 
-    // Proceed to Permissions
-    cy.get('button').contains('Next: Set Admin Permissions').click();
+    // 1. Click "+ New role" to reveal the role input field
+      cy.contains('button', '+ New role').should('be.visible').click();
+
+      // 2. Locate the input field with the placeholder "e.g. Cashier" and type your new role
+      cy.get('input[placeholder="e.g. Cashier"]').should('be.visible').type(roleName);
+
+      // 3. Click the "Next: Set Permissions" button to proceed
+      cy.get('button').contains('Next: Set Permissions').click();
+
+
+              // 1. Validate the bold text (dynamic member name) matches what was generated
+              // Using the memberFirstName and memberLastName from your userData object
+              const fullMemberName = `${memberFirstName} ${memberLastName}`;
+              cy.contains('p, span, div, h2', fullMemberName)
+                .should('be.visible')
+                .should('have.css', 'font-weight', '600'); // Validates that the text is bold (bold typically equals 700)
+
+          
+
+        // 2. Select Permissions by clicking the parent wrapper element directly
+        // This avoids looking for hidden or non-standard nested inputs
+        cy.contains('div', 'View Audit Log').closest('div').click({ force: true });
+        cy.contains('div', 'View Branches').closest('div').click({ force: true });
+
+       
 
     // Save Permissions
     cy.scrollTo('bottom');
@@ -139,14 +149,6 @@ cy.origin('https://qaapp.bas.ng', { args: userData },({firstName,lastName,genera
 
 
 });
-
-
-
-
-
-
-
-
 
 
   });
